@@ -2,12 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [master]
     paths-ignore:
       - '**.md'
       - 'docs/**'
   pull_request:
-    branches: [main, master]
+    branches: [master]
     paths-ignore:
       - '**.md'
       - 'docs/**'
@@ -19,14 +19,12 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    container: metacall/guix:latest
     steps:
       - uses: actions/checkout@v4
-      - id: channels
+      - name: Start guix-daemon
         run: |
-          echo "content<<EOF" >> $GITHUB_OUTPUT
-          cat manifest/channels.scm >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-      - uses: PromyLOPh/guix-install-action@v1.6
-        with:
-          channels: ${{ steps.channels.outputs.content }}
+          guix-daemon --build-users-group=guixbuild --disable-chroot &
+          sleep 2
+      - run: make pull
       - run: make ci

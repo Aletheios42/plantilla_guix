@@ -5,7 +5,7 @@ Plantilla agnóstica de lenguaje basada en [GNU Guix](https://guix.gnu.org) para
 ## Requisitos
 
 - [GNU Guix](https://guix.gnu.org) instalado y actualizado (`guix pull`)
-- [act](https://github.com/nektos/act) (opcional, para simular CI local)
+- [act](https://github.com/nektos/act) + Docker/Podman (opcional, para simular CI local)
 
 ## Comandos
 
@@ -19,7 +19,7 @@ Plantilla agnóstica de lenguaje basada en [GNU Guix](https://guix.gnu.org) para
 | `make test` | Ejecuta los tests (requiere definir `TEST_CMD`) |
 | `make build` | Compila el proyecto (requiere definir `BUILD_CMD`) |
 | `make ci` | Pipeline CI completa: lint + test + build |
-| `make ci-act` | Simula la pipeline de GitHub Actions localmente |
+| `make ci-act` | Simula la pipeline de GitHub Actions localmente (requiere Docker/Podman) |
 
 ## Primera vez
 
@@ -30,6 +30,22 @@ make pull
 ```
 
 Esto configura los canales definidos en `manifest/channels.scm` (por defecto: GNU Guix oficial + nonguix).
+
+## Simulación de CI local
+
+Para ejecutar la pipeline completa de GitHub Actions en tu máquina (mismo contenedor, mismos pasos):
+
+```bash
+make ci-act
+```
+
+Esto usa [act](https://github.com/nektos/act) con la imagen `metacall/guix:latest` y arranca `guix-daemon` manualmente dentro del contenedor. Requiere Docker o Podman instalado.
+
+Alternativamente, si tienes Guix en tu host, puedes ejecutar directamente:
+
+```bash
+make ci
+```
 
 ## Configuración de herramientas
 

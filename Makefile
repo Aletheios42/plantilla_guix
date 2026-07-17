@@ -21,13 +21,13 @@ check:
 pull: check ## Sincroniza los canales Guix con manifest/channels.scm
 	@guix pull -C manifest/channels.scm
 
-dev: export ENV := DEV
-dev: check ## Shell de desarrollo
-	@exec guix shell -m manifest/dev.scm
-
 prod: export ENV := PROD
 prod: check ## Shell de producción
 	@exec guix shell -m manifest/prod.scm
+
+dev: export ENV := DEV
+dev: check ## Shell de desarrollo
+	@exec guix shell -m manifest/dev.scm
 
 lint: check ## Ejecuta el linter (define LINT_CMD)
 	$(call comprobar_cmd,LINT_CMD)
@@ -45,6 +45,7 @@ ci: check lint test build ## Pipeline CI (usada por el runner remoto)
 
 ci-act: check ## Simula la pipeline completa localmente con act
 	@command -v act >/dev/null || { echo "Falta: act — https://github.com/nektos/act"; exit 1; }
+	@command -v docker >/dev/null || command -v podman >/dev/null || { echo "Falta: docker o podman"; exit 1; }
 	@act -j ci
 
 all: help

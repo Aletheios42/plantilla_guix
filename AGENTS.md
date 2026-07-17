@@ -11,12 +11,14 @@ Este proyecto usa **GNU Guix** para gestionar dependencias. Todos los comandos s
 ```bash
 make dev          # Shell de desarrollo
 make ci           # Pipeline completa: lint + test + build
-make ci-act       # Simular GitHub Actions localmente
+make ci-act       # Simular GitHub Actions localmente (requiere Docker/Podman + act)
 make pull         # Sincronizar canales Guix con manifest/channels.scm
 make lint         # Linter (requiere LINT_CMD)
 make test         # Tests (requiere TEST_CMD)
 make build        # Build (requiere BUILD_CMD)
 ```
+
+El CI remoto usa la imagen `metacall/guix:latest` y arranca `guix-daemon` manualmente (sin systemd). `make ci-act` ejecuta exactamente el mismo workflow localmente.
 
 ## Validación
 

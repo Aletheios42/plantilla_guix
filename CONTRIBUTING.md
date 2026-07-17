@@ -4,7 +4,7 @@ Gracias por tu interés en contribuir a este proyecto.
 
 ## Flujo de trabajo
 
-1. Crea una rama desde `main` con un nombre descriptivo:
+1. Crea una rama desde `master` con un nombre descriptivo:
    ```bash
    git checkout -b feat/mi-funcionalidad
    ```
@@ -17,10 +17,11 @@ Gracias por tu interés en contribuir a este proyecto.
    ```bash
    make ci
    ```
-   O simula GitHub Actions:
+   O simula GitHub Actions con el mismo contenedor y pasos:
    ```bash
    make ci-act
    ```
+   (Requiere Docker/Podman + act. Usa la imagen `metacall/guix:latest` y arranca `guix-daemon` manualmente.)
 5. Asegúrate de que todo pasa antes de abrir la PR.
 6. Abre una Pull Request usando la plantilla proporcionada.
 
