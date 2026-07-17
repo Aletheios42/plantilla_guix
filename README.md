@@ -1,0 +1,81 @@
+# Template Repository
+
+Plantilla agnóstica de lenguaje basada en [GNU Guix](https://guix.gnu.org) para entornos reproducibles.
+
+## Requisitos
+
+- [GNU Guix](https://guix.gnu.org) instalado y actualizado (`guix pull`)
+- [act](https://github.com/nektos/act) (opcional, para simular CI local)
+
+## Comandos
+
+| Comando | Descripción |
+|---|---|
+| `make help` | Lista todos los comandos disponibles |
+| `make dev` | Abre un shell de desarrollo con el entorno Guix |
+| `make prod` | Abre un shell de producción con el entorno Guix |
+| `make lint` | Ejecuta el linter (requiere definir `LINT_CMD`) |
+| `make test` | Ejecuta los tests (requiere definir `TEST_CMD`) |
+| `make build` | Compila el proyecto (requiere definir `BUILD_CMD`) |
+| `make ci` | Pipeline CI completa: lint + test + build |
+| `make ci-act` | Simula la pipeline de GitHub Actions localmente |
+
+## Configuración de herramientas
+
+Los comandos `lint`, `test` y `build` son hooks que debes configurar para tu proyecto. Define las variables en tu `Makefile` local o como variables de entorno:
+
+```makefile
+LINT_CMD = <tu-linter>
+TEST_CMD = <tu-test-runner>
+BUILD_CMD = <tu-build-tool>
+```
+
+O invoca directamente:
+
+```bash
+make lint LINT_CMD="golangci-lint run"
+make test TEST_CMD="go test ./..."
+```
+
+## Estructura
+
+```
+.
+├── .github/
+│   ├── CODEOWNERS              # Revisores automáticos de PRs
+│   ├── ISSUE_TEMPLATE/         # Plantillas de issues
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   └── workflows/
+│       └── ci.yaml             # GitHub Actions CI
+├── manifest/
+│   ├── base.scm                # Paquetes Guix base (comunes a todos los entornos)
+│   ├── ci.scm                  # Paquetes para CI (lint, test, build)
+│   ├── dev.scm                 # Paquetes para desarrollo
+│   └── prod.scm                # Paquetes para producción
+├── Makefile                    # Comandos del proyecto
+├── AGENTS.md                   # Instrucciones para asistentes AI
+├── CONTRIBUTING.md             # Guía de contribución
+├── SECURITY.md                 # Política de seguridad
+├── CHANGELOG.md                # Registro de cambios
+└── README.md
+```
+
+## Personalización
+
+1. **Añade paquetes** en los manifests (`manifest/*.scm`) según tu lenguaje/framework.
+2. **Configura `LINT_CMD`**, `TEST_CMD`, `BUILD_CMD` en tu Makefile o entorno.
+3. **Actualiza `CODEOWNERS`** con los usernames de GitHub de tu equipo.
+4. **Añade una licencia** cuando estés listo (ej. MIT, Apache-2.0, GPL-3.0).
+
+## Política de commits
+
+Este proyecto sigue [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: nueva funcionalidad
+fix: corrección de bug
+refactor: refactorización sin cambios funcionales
+docs: cambios en documentación
+test: añadir o actualizar tests
+chore: tareas de mantenimiento, CI, dependencias
+```

@@ -1,0 +1,41 @@
+# Guix
+.guix-profile/
+.guix-channel/
+/gnu/store/
+
+# Entorno
+.env
+.env.*
+!.env.example
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+out/
+target/
+*.o
+*.a
+*.so
+*.dylib
+
+# Logs
+*.log
+logs/
+
+# Temp
+*.tmp
+*.bak
+*.cache
