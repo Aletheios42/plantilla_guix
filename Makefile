@@ -1,4 +1,4 @@
-.PHONY: help check dev prod ci lint test build ci-act all
+.PHONY: help check pull dev prod ci lint test build ci-act all
 
 LINT_CMD ?=
 TEST_CMD ?=
@@ -17,6 +17,9 @@ help: ## Muestra esta ayuda
 
 check:
 	@command -v guix >/dev/null || { echo "Falta: guix — https://guix.gnu.org"; exit 1; }
+
+pull: check ## Sincroniza los canales Guix con manifest/channels.scm
+	@guix pull -C manifest/channels.scm
 
 dev: export ENV := DEV
 dev: check ## Shell de desarrollo

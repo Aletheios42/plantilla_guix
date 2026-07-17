@@ -12,6 +12,7 @@ Plantilla agnóstica de lenguaje basada en [GNU Guix](https://guix.gnu.org) para
 | Comando | Descripción |
 |---|---|
 | `make help` | Lista todos los comandos disponibles |
+| `make pull` | Sincroniza los canales Guix con `manifest/channels.scm` |
 | `make dev` | Abre un shell de desarrollo con el entorno Guix |
 | `make prod` | Abre un shell de producción con el entorno Guix |
 | `make lint` | Ejecuta el linter (requiere definir `LINT_CMD`) |
@@ -19,6 +20,16 @@ Plantilla agnóstica de lenguaje basada en [GNU Guix](https://guix.gnu.org) para
 | `make build` | Compila el proyecto (requiere definir `BUILD_CMD`) |
 | `make ci` | Pipeline CI completa: lint + test + build |
 | `make ci-act` | Simula la pipeline de GitHub Actions localmente |
+
+## Primera vez
+
+Antes de `make dev` por primera vez, sincroniza los canales Guix:
+
+```bash
+make pull
+```
+
+Esto configura los canales definidos en `manifest/channels.scm` (por defecto: GNU Guix oficial + nonguix).
 
 ## Configuración de herramientas
 
@@ -48,6 +59,7 @@ make test TEST_CMD="go test ./..."
 │   └── workflows/
 │       └── ci.yaml             # GitHub Actions CI
 ├── manifest/
+│   ├── channels.scm            # Canales Guix (fuente de verdad)
 │   ├── base.scm                # Paquetes Guix base (comunes a todos los entornos)
 │   ├── ci.scm                  # Paquetes para CI (lint, test, build)
 │   ├── dev.scm                 # Paquetes para desarrollo
@@ -62,10 +74,11 @@ make test TEST_CMD="go test ./..."
 
 ## Personalización
 
-1. **Añade paquetes** en los manifests (`manifest/*.scm`) según tu lenguaje/framework.
-2. **Configura `LINT_CMD`**, `TEST_CMD`, `BUILD_CMD` en tu Makefile o entorno.
-3. **Actualiza `CODEOWNERS`** con los usernames de GitHub de tu equipo.
-4. **Añade una licencia** cuando estés listo (ej. MIT, Apache-2.0, GPL-3.0).
+1. **Añade canales** en `manifest/channels.scm` si necesitas paquetes de otros repositorios Guix (ej. `guix-science`). Ejecuta `make pull` después.
+2. **Añade paquetes** en los manifests (`manifest/*.scm`) según tu lenguaje/framework.
+3. **Configura `LINT_CMD`**, `TEST_CMD`, `BUILD_CMD` en tu Makefile o entorno.
+4. **Actualiza `CODEOWNERS`** con los usernames de GitHub de tu equipo.
+5. **Añade una licencia** cuando estés listo (ej. MIT, Apache-2.0, GPL-3.0).
 
 ## Política de commits
 

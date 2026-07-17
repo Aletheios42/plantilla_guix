@@ -8,8 +8,12 @@ Gracias por tu interés en contribuir a este proyecto.
    ```bash
    git checkout -b feat/mi-funcionalidad
    ```
-2. Haz tus cambios siguiendo las convenciones del proyecto.
-3. Ejecuta la pipeline local completa:
+2. La primera vez, sincroniza los canales Guix:
+   ```bash
+   make pull
+   ```
+3. Haz tus cambios siguiendo las convenciones del proyecto.
+4. Ejecuta la pipeline local completa:
    ```bash
    make ci
    ```
@@ -17,8 +21,8 @@ Gracias por tu interés en contribuir a este proyecto.
    ```bash
    make ci-act
    ```
-4. Asegúrate de que todo pasa antes de abrir la PR.
-5. Abre una Pull Request usando la plantilla proporcionada.
+5. Asegúrate de que todo pasa antes de abrir la PR.
+6. Abre una Pull Request usando la plantilla proporcionada.
 
 ## Commits
 

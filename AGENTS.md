@@ -12,6 +12,7 @@ Este proyecto usa **GNU Guix** para gestionar dependencias. Todos los comandos s
 make dev          # Shell de desarrollo
 make ci           # Pipeline completa: lint + test + build
 make ci-act       # Simular GitHub Actions localmente
+make pull         # Sincronizar canales Guix con manifest/channels.scm
 make lint         # Linter (requiere LINT_CMD)
 make test         # Tests (requiere TEST_CMD)
 make build        # Build (requiere BUILD_CMD)
@@ -36,9 +37,11 @@ Si `make ci` falla, **no propongas el cambio** hasta que pase.
 
 ## Estructura de manifests
 
+- `manifest/channels.scm` — canales Guix disponibles (fuente de verdad).
 - `manifest/base.scm` — paquetes comunes a todos los entornos.
 - `manifest/dev.scm` — extiende base con herramientas de desarrollo.
 - `manifest/ci.scm` — extiende base con linter, test runner y build tool.
 - `manifest/prod.scm` — extiende base con dependencias de producción.
 
 Para añadir un paquete nuevo, agrégalo al manifest correspondiente, no al Makefile.
+Para añadir un canal nuevo, agrégalo a `manifest/channels.scm` y ejecuta `make pull`.
